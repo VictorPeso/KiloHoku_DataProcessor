@@ -10,4 +10,3 @@ Frontend -> Backend API -> PostgreSQL <- Data Processor Worker
 
 The backend does not execute processing logic. It only reads data and exposes
 HTTP endpoints.
-

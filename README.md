@@ -15,4 +15,3 @@ runs in a polling loop, claims pending work from PostgreSQL, processes source
 files, and writes normalized results back to the database.
 
 This repository currently contains only the initial architecture skeleton.
-

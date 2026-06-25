@@ -8,4 +8,3 @@
 6. Data is transformed and analyzed by specialized processors.
 7. Results and progress are written back to PostgreSQL.
 8. The job is marked as completed, completed with warnings, failed, or cancelled.
-

@@ -1,2 +1,1 @@
 """Domain validation rule placeholders."""
-

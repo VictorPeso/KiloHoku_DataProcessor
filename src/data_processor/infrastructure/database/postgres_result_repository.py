@@ -1,2 +1,1 @@
 """PostgreSQL result repository placeholder."""
-

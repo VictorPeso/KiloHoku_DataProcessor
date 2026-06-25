@@ -1,2 +1,1 @@
 """Autonomous polling worker."""
-

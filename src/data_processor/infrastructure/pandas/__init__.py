@@ -1,2 +1,1 @@
 """pandas-based processing adapters."""
-

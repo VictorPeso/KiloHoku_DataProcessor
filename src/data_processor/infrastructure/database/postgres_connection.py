@@ -1,2 +1,1 @@
 """PostgreSQL connection management placeholder."""
-

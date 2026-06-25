@@ -5,4 +5,3 @@ services:
       dockerfile: docker/Dockerfile.worker
     env_file:
       - ../.env.example
-

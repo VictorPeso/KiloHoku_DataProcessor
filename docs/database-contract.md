@@ -10,4 +10,3 @@ Initial tables to define later:
 - processing_results
 - processing_errors
 - processing_warnings
-

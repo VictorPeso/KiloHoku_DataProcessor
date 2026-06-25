@@ -1,2 +1,1 @@
 """Astronomical data processor package."""
-

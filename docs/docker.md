@@ -10,4 +10,3 @@ backend
 postgresql
 data-processor-worker
 ```
-

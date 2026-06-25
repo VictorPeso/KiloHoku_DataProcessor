@@ -1,2 +1,1 @@
 """DataFrame construction placeholder."""
-

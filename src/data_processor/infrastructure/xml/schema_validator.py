@@ -1,2 +1,1 @@
 """XSD validation placeholder."""
-
