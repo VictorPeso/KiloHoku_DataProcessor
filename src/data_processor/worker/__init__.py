@@ -1,0 +1,2 @@
+"""Autonomous polling worker."""
+

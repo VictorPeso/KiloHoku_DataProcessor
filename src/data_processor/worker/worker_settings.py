@@ -1,0 +1,2 @@
+"""Worker-specific settings placeholder."""
+

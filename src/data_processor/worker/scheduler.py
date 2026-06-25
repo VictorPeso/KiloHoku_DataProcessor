@@ -1,0 +1,2 @@
+"""Polling schedule placeholder."""
+

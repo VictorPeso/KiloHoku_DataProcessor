@@ -1,0 +1,2 @@
+"""Observation domain model placeholder."""
+

@@ -1,0 +1,2 @@
+"""Shared type aliases placeholder."""
+

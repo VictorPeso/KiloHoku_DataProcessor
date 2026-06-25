@@ -1,0 +1,2 @@
+"""Main polling loop placeholder."""
+

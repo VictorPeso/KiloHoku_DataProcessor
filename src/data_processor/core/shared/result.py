@@ -1,0 +1,2 @@
+"""Generic operation result placeholder."""
+

@@ -1,0 +1,2 @@
+"""Job summary DTO placeholder."""
+

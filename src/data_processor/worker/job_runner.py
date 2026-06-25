@@ -1,0 +1,2 @@
+"""Job execution adapter placeholder."""
+

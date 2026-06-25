@@ -1,0 +1,2 @@
+"""Progress logging placeholder."""
+
