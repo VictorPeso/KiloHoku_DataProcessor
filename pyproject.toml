@@ -5,11 +5,21 @@ description = "Autonomous astronomical data processing worker with PostgreSQL po
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "alembic>=1.16",
     "pandas>=2.2",
+    "plotly>=6.0",
     "psycopg[binary]>=3.2",
     "pydantic-settings>=2.0",
     "lxml>=5.0",
+    "sqlalchemy>=2.0",
+    "streamlit>=1.40",
+    "tqdm>=4.0",
 ]
+
+[project.scripts]
+data-processor = "data_processor.cli.commands:main"
+preload-light-curves = "data_processor.cli.commands:preload_light_curves_main"
+light-curve-viewer = "data_processor.cli.commands:light_curve_viewer_main"
 
 [project.optional-dependencies]
 dev = [
