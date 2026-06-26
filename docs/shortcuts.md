@@ -32,6 +32,12 @@ Run the local viewer through the main CLI:
 data-processor light-curve-viewer
 ```
 
+Stop the local viewer through the main CLI:
+
+```powershell
+data-processor stop-light-curve-viewer
+```
+
 ## Direct Shortcuts
 
 Preload XML/VOTable light curves from `LOCAL_LIGHT_CURVES_PATH`:
@@ -80,6 +86,18 @@ The viewer opens at:
 
 ```text
 http://localhost:8501
+```
+
+Stop the local Streamlit viewer running in the background:
+
+```powershell
+stop-light-curve-viewer
+```
+
+If the viewer is running on a different port:
+
+```powershell
+stop-light-curve-viewer --port 8502
 ```
 
 ## Alembic

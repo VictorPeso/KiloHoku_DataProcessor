@@ -20,6 +20,7 @@ dependencies = [
 data-processor = "data_processor.cli.commands:main"
 preload-light-curves = "data_processor.cli.commands:preload_light_curves_main"
 light-curve-viewer = "data_processor.cli.commands:light_curve_viewer_main"
+stop-light-curve-viewer = "data_processor.cli.commands:stop_light_curve_viewer_main"
 
 [project.optional-dependencies]
 dev = [

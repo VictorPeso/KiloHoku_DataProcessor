@@ -1,6 +1,8 @@
 """CLI commands for local development and operations."""
 
 import argparse
+import platform
+import subprocess
 from pathlib import Path
 
 from streamlit.web import cli as streamlit_cli
@@ -26,6 +28,11 @@ def main() -> None:
         "light-curve-viewer",
         help="Run the local Streamlit light-curve viewer.",
     )
+    stop_viewer_parser = subparsers.add_parser(
+        "stop-light-curve-viewer",
+        help="Stop the local Streamlit light-curve viewer by port.",
+    )
+    _add_stop_viewer_arguments(stop_viewer_parser)
 
     args = parser.parse_args()
 
@@ -33,6 +40,8 @@ def main() -> None:
         _run_preload_light_curves(args)
     elif args.command == "light-curve-viewer":
         light_curve_viewer_main()
+    elif args.command == "stop-light-curve-viewer":
+        _run_stop_light_curve_viewer(args)
 
 
 def preload_light_curves_main() -> None:
@@ -43,6 +52,12 @@ def preload_light_curves_main() -> None:
 
 def light_curve_viewer_main() -> None:
     streamlit_cli.main_run(["src/data_processor/local_viewer/app.py"])
+
+
+def stop_light_curve_viewer_main() -> None:
+    parser = argparse.ArgumentParser(prog="stop-light-curve-viewer")
+    _add_stop_viewer_arguments(parser)
+    _run_stop_light_curve_viewer(parser.parse_args())
 
 
 def _add_preload_arguments(parser: argparse.ArgumentParser) -> None:
@@ -75,6 +90,15 @@ def _add_preload_arguments(parser: argparse.ArgumentParser) -> None:
     )
 
 
+def _add_stop_viewer_arguments(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=8501,
+        help="Port used by the local Streamlit viewer. Defaults to 8501.",
+    )
+
+
 def _run_preload_light_curves(args: argparse.Namespace) -> None:
     settings = get_settings()
     configure_logging(settings.log_level)
@@ -88,6 +112,39 @@ def _run_preload_light_curves(args: argparse.Namespace) -> None:
         show_progress=not args.no_progress,
     )
     print(summary.to_message())
+
+
+def _run_stop_light_curve_viewer(args: argparse.Namespace) -> None:
+    if platform.system() != "Windows":
+        raise SystemExit("stop-light-curve-viewer is currently implemented for Windows only.")
+
+    command = [
+        "powershell.exe",
+        "-NoProfile",
+        "-Command",
+        (
+            "$connections = Get-NetTCPConnection -State Listen "
+            f"| Where-Object {{ $_.LocalPort -eq {args.port} }}; "
+            "if (-not $connections) { "
+            f"Write-Output 'No process is listening on port {args.port}.'; exit 0 "
+            "} "
+            "$processIds = $connections | Select-Object -ExpandProperty OwningProcess -Unique; "
+            "foreach ($processId in $processIds) { "
+            "$process = Get-Process -Id $processId -ErrorAction SilentlyContinue; "
+            "if ($process) { "
+            "Stop-Process -Id $processId -Force; "
+            f'Write-Output "Stopped process $processId on port {args.port}." '
+            "} "
+            "}"
+        ),
+    ]
+    result = subprocess.run(command, check=False, capture_output=True, text=True)
+    if result.stdout:
+        print(result.stdout.strip())
+    if result.stderr:
+        print(result.stderr.strip())
+    if result.returncode != 0:
+        raise SystemExit(result.returncode)
 
 
 if __name__ == "__main__":

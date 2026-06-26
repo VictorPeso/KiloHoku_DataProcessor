@@ -1,0 +1,79 @@
+.block-container {
+    padding-top: 1.25rem;
+    padding-bottom: 1.5rem;
+    max-width: 100%;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+div.stButton > button {
+    min-height: 3.15rem;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+div[class*="st-key-filter_g_on"] button {
+    border-color: #62d989;
+    color: #f4fff8;
+    background: color-mix(in srgb, #62d989 30%, #151922);
+}
+
+div[class*="st-key-filter_g_off"] button {
+    border-color: color-mix(in srgb, #62d989 42%, transparent);
+    color: color-mix(in srgb, #62d989 70%, white);
+    background: color-mix(in srgb, #62d989 10%, #151922);
+}
+
+div[class*="st-key-filter_r_on"] button {
+    border-color: #ff5d5d;
+    color: #fff7f7;
+    background: color-mix(in srgb, #ff5d5d 30%, #151922);
+}
+
+div[class*="st-key-filter_r_off"] button {
+    border-color: color-mix(in srgb, #ff5d5d 42%, transparent);
+    color: color-mix(in srgb, #ff5d5d 70%, white);
+    background: color-mix(in srgb, #ff5d5d 10%, #151922);
+}
+
+div[class*="st-key-filter_i_on"] button {
+    border-color: #ffd166;
+    color: #fffaf0;
+    background: color-mix(in srgb, #ffd166 24%, #151922);
+}
+
+div[class*="st-key-filter_i_off"] button {
+    border-color: color-mix(in srgb, #ffd166 36%, transparent);
+    color: color-mix(in srgb, #ffd166 60%, white);
+    background: color-mix(in srgb, #ffd166 8%, #151922);
+}
+
+.filter-chip-row {
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+    min-height: 2.25rem;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.15rem;
+    padding: 0.18rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--filter-color) 65%, transparent);
+    border-radius: 999px;
+    color: color-mix(in srgb, var(--filter-color) 74%, white);
+    background: color-mix(in srgb, var(--filter-color) 16%, transparent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.15rem;
+}
+
+.filter-chip.muted {
+    border-color: rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.52);
+    background: rgba(255, 255, 255, 0.04);
+}

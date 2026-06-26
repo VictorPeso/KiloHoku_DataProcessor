@@ -24,6 +24,7 @@ class AstronomicalObjectSummary:
     id: int
     source_name: str
     ztf_oid: int | None
+    available_filters: tuple[str, ...]
     series_count: int
     observation_count: int
 
@@ -39,6 +40,7 @@ class LightCurveReadRepository:
                 AstronomicalObject.source_name.label("source_name"),
                 AstronomicalObject.ztf_oid.label("ztf_oid"),
                 PhotometricSeries.id.label("series_id"),
+                PhotometricSeries.filter_code.label("filter_code"),
                 PhotometricSeries.observation_count.label("observation_count"),
             )
             .join(
@@ -52,19 +54,29 @@ class LightCurveReadRepository:
 
         summaries: dict[int, AstronomicalObjectSummary] = {}
         series_ids_by_object: dict[int, set[int]] = {}
+        filters_by_object: dict[int, set[str]] = {}
 
         for row in self._session.execute(statement):
             object_id = row.object_id
             series_ids_by_object.setdefault(object_id, set())
+            filters_by_object.setdefault(object_id, set())
             if row.series_id is not None:
                 series_ids_by_object[object_id].add(row.series_id)
+            if row.filter_code is not None:
+                filters_by_object[object_id].add(_normalize_filter_code(row.filter_code))
 
             previous = summaries.get(object_id)
             observation_count = int(row.observation_count or 0)
+            available_filters = tuple(
+                filter_code
+                for filter_code in ["g", "r", "i"]
+                if filter_code in filters_by_object[object_id]
+            )
             summaries[object_id] = AstronomicalObjectSummary(
                 id=object_id,
                 source_name=row.source_name,
                 ztf_oid=row.ztf_oid,
+                available_filters=available_filters,
                 series_count=len(series_ids_by_object[object_id]),
                 observation_count=(previous.observation_count if previous else 0)
                 + observation_count,
@@ -114,16 +126,31 @@ def _build_light_curve_statement(
     statement = (
         select(
             AstronomicalObject.source_name.label("object_name"),
-            PhotometricSeries.filter_code.label("series_filter_code"),
+            PhotometricSeries.filter_code.label("filter"),
             PhotometricSeries.source_filename,
             PhotometricObservation.hjd,
             PhotometricObservation.mjd,
             PhotometricObservation.magnitude,
             PhotometricObservation.magnitude_error,
             PhotometricObservation.catalog_flags,
-            PhotometricObservation.filter_code.label("observation_filter_code"),
             PhotometricObservation.oid,
             PhotometricObservation.exposure_id,
+            PhotometricObservation.ra,
+            PhotometricObservation.dec,
+            PhotometricObservation.chi,
+            PhotometricObservation.sharpness,
+            PhotometricObservation.file_fractional_day,
+            PhotometricObservation.field_id,
+            PhotometricObservation.ccd_id,
+            PhotometricObservation.quadrant_id,
+            PhotometricObservation.limiting_magnitude,
+            PhotometricObservation.magnitude_zeropoint,
+            PhotometricObservation.magnitude_zeropoint_rms,
+            PhotometricObservation.color_coefficient,
+            PhotometricObservation.color_coefficient_uncertainty,
+            PhotometricObservation.exposure_time,
+            PhotometricObservation.airmass,
+            PhotometricObservation.program_id,
         )
         .join(PhotometricSeries, PhotometricSeries.object_id == AstronomicalObject.id)
         .join(PhotometricObservation, PhotometricObservation.series_id == PhotometricSeries.id)
