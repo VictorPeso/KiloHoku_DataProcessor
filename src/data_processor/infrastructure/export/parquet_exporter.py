@@ -1,1 +1,0 @@
-"""Parquet exporter placeholder."""

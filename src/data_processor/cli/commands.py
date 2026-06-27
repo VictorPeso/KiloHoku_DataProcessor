@@ -7,11 +7,12 @@ from pathlib import Path
 
 from streamlit.web import cli as streamlit_cli
 
-from data_processor.config.logging import configure_logging
-from data_processor.config.settings import get_settings
-from data_processor.infrastructure.importers.local_light_curve_preloader import (
+from data_processor.acquisition.importers.local_light_curve_preloader import (
     LocalLightCurvePreloader,
 )
+from data_processor.config.logging import configure_logging
+from data_processor.config.settings import get_settings
+from data_processor.odm.database.schema import create_current_schema
 
 
 def main() -> None:
@@ -33,6 +34,10 @@ def main() -> None:
         help="Stop the local Streamlit light-curve viewer by port.",
     )
     _add_stop_viewer_arguments(stop_viewer_parser)
+    subparsers.add_parser(
+        "init-db",
+        help="Create the current prototype PostgreSQL schema.",
+    )
 
     args = parser.parse_args()
 
@@ -42,6 +47,8 @@ def main() -> None:
         light_curve_viewer_main()
     elif args.command == "stop-light-curve-viewer":
         _run_stop_light_curve_viewer(args)
+    elif args.command == "init-db":
+        init_db_main()
 
 
 def preload_light_curves_main() -> None:
@@ -51,13 +58,18 @@ def preload_light_curves_main() -> None:
 
 
 def light_curve_viewer_main() -> None:
-    streamlit_cli.main_run(["src/data_processor/local_viewer/app.py"])
+    streamlit_cli.main_run(["src/data_processor/viewer/local_viewer/app.py"])
 
 
 def stop_light_curve_viewer_main() -> None:
     parser = argparse.ArgumentParser(prog="stop-light-curve-viewer")
     _add_stop_viewer_arguments(parser)
     _run_stop_light_curve_viewer(parser.parse_args())
+
+
+def init_db_main() -> None:
+    create_current_schema()
+    print("Current prototype database schema is ready.")
 
 
 def _add_preload_arguments(parser: argparse.ArgumentParser) -> None:

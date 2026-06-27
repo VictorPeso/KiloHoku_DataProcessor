@@ -1,1 +1,0 @@
-"""Light curve analysis placeholder."""

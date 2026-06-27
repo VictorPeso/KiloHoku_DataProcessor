@@ -2,7 +2,7 @@
 
 from sqlalchemy.dialects import postgresql
 
-from data_processor.infrastructure.database.repositories.light_curve_repository import (
+from data_processor.odm.database.repositories.light_curve_repository import (
     _build_light_curve_statement,
     _expand_filter_aliases,
 )

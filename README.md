@@ -1,17 +1,47 @@
 # Data Processor
 
-Autonomous worker service for importing, validating, transforming, and analyzing
-astronomical XML data.
+Python project for importing local astronomical VOTable XML light curves into
+PostgreSQL and visualizing them with a provisional Streamlit viewer.
 
-The backend and this processor are intended to run as independent containers.
-Both communicate through PostgreSQL:
+The current project is intentionally small. It is organized around four blocks:
+
+- `acquisition`: reads local XML/VOTable files and stores their data.
+- `processing`: reserved for normalization and scientific processing routines.
+- `odm`: SQLAlchemy models, sessions, and database read/write repositories.
+- `viewer`: provisional graphical tools for inspecting imported data.
+
+The backend is expected to be a separate service. Both services share
+PostgreSQL, but this repository currently focuses only on importing and viewing
+astronomical data during development.
+
+## Basic Flow
 
 ```text
-Frontend -> Backend API -> PostgreSQL <- Data Processor Worker
+Local XML files -> acquisition -> odm/PostgreSQL -> viewer
 ```
 
-The backend serves HTTP requests and reads already processed data. The processor
-runs in a polling loop, claims pending work from PostgreSQL, processes source
-files, and writes normalized results back to the database.
+## Common Commands
 
-This repository currently contains only the initial architecture skeleton.
+Install in editable mode:
+
+```powershell
+pip install -e ".[dev]"
+```
+
+Create the current prototype schema:
+
+```powershell
+init-db
+```
+
+Preload local light curves:
+
+```powershell
+preload-light-curves
+```
+
+Run the provisional viewer:
+
+```powershell
+light-curve-viewer
+```

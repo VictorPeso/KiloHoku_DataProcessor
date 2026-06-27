@@ -1,1 +1,0 @@
-"""Job claiming coordination placeholder."""

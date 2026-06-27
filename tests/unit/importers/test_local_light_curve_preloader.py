@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from data_processor.infrastructure.importers.local_light_curve_preloader import (
+from data_processor.acquisition.importers.local_light_curve_preloader import (
     _build_observation_rows,
 )
 

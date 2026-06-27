@@ -26,6 +26,12 @@ Preload local light curves through the main CLI:
 data-processor preload-light-curves --limit 20
 ```
 
+Create the current prototype database schema:
+
+```powershell
+data-processor init-db
+```
+
 Run the local viewer through the main CLI:
 
 ```powershell
@@ -39,6 +45,12 @@ data-processor stop-light-curve-viewer
 ```
 
 ## Direct Shortcuts
+
+Create the current prototype PostgreSQL schema:
+
+```powershell
+init-db
+```
 
 Preload XML/VOTable light curves from `LOCAL_LIGHT_CURVES_PATH`:
 
@@ -98,12 +110,4 @@ If the viewer is running on a different port:
 
 ```powershell
 stop-light-curve-viewer --port 8502
-```
-
-## Alembic
-
-Alembic commands are documented in:
-
-```text
-alembic/COMMANDS.md
 ```

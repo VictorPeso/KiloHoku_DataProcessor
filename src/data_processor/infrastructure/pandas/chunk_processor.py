@@ -1,1 +1,0 @@
-"""Chunked processing placeholder."""

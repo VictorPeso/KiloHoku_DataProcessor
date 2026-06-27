@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from data_processor.infrastructure.xml.votable_light_curve_reader import (
+from data_processor.acquisition.xml.votable_light_curve_reader import (
     infer_object_and_filter_from_filename,
     read_votable_light_curve,
 )

@@ -1,1 +1,0 @@
-"""Job status DTO placeholder."""

@@ -1,1 +1,0 @@
-"""XML format detector placeholder."""

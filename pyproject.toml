@@ -1,11 +1,10 @@
 [project]
 name = "data-processor"
 version = "0.1.0"
-description = "Autonomous astronomical data processing worker with PostgreSQL polling."
+description = "Astronomical data acquisition, processing, PostgreSQL access, and local visualization."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "alembic>=1.16",
     "pandas>=2.2",
     "plotly>=6.0",
     "psycopg[binary]>=3.2",
@@ -18,9 +17,13 @@ dependencies = [
 
 [project.scripts]
 data-processor = "data_processor.cli.commands:main"
+init-db = "data_processor.cli.commands:init_db_main"
 preload-light-curves = "data_processor.cli.commands:preload_light_curves_main"
 light-curve-viewer = "data_processor.cli.commands:light_curve_viewer_main"
 stop-light-curve-viewer = "data_processor.cli.commands:stop_light_curve_viewer_main"
+
+[tool.setuptools.package-data]
+data_processor = ["viewer/local_viewer/*.css"]
 
 [project.optional-dependencies]
 dev = [
